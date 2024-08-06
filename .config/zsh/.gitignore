@@ -1,0 +1,13 @@
+
+.zsh_sessions/
+.zcomet/
+.zlocal*
+.zlocal.zsh
+hashes
+*.zwc
+.zcomp*
+.zsh_history
+.iterm2
+tx.zsh
+*.log
+.iterm2*
