@@ -78,3 +78,14 @@ function find-port-process () {
   fi
 }
 
+# Cheap plugin manager
+function zplug-src () {
+  repo=`echo $1 | cut -d '/' -f 1`
+  plugin=`echo $1 | cut -d '/' -f 2`
+  plug_dir="${ZPLUGDIR:-$HOME/.local/share/zsh/plugins}/${repo}"
+  plug_path="${plug_dir}/${plugin}.plugin.zsh"
+  if [[ -d $plug_dir ]]; then
+    git clone --depth=1 https://github.com/$repo/$plugin $plug_dir
+  fi
+  source $plug_path
+}
