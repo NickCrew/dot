@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+[[ -z "$1" ]] && echo "Please provide target volume name" && exit 1;
+
+target_vol="$1"
+
+echo "Archiving volume '${target_vol}'"
+
+docker run \
+	--rm \
+	-v ${target_vol}:/volume \
+	-v /tmp:/backup \
+	alpine \
+	tar -cjf /backup/${target_vol}.tar.bz2 -C /volume ./
+
+result_archive="/tmp/${target_vol}.tar.bz2"
+[[ ! -f "${result_archive}" ]] && echo "${result_archive} not found." && exit 1
+
+echo "Done. Archived volume '${target_vol}' at : ${result_archive}"

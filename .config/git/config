@@ -1,0 +1,204 @@
+# vim: ft=gitconfig
+#
+[core]
+	excludesfile = ~/.config/git/global-ignore
+	ignorecase = false
+	autocrlf = false
+	editor = nvim
+	safecrlf = false
+	quotepath = false
+	preloadindex = true
+    pager = delta
+
+
+[user]
+	name = Nick Ferguson
+	email = me@nickferguson.dev
+
+[github]
+	user = NickCrew
+
+[commit]
+	gpgsign = false
+
+[gpg]
+	program = /opt/homebrew/bin/gpg
+
+[credential]
+	helper = store
+
+[help]
+  autocorrect = prompt
+
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
+[init]
+	defaultBranch = master
+
+[color]
+	ui = auto
+
+[push]
+	# When pushing code, always push only your current branch to a branch of the same name
+	default = current
+  autoSetupRemote = true
+
+[fetch]
+	# Automatically prune deleted branches from your local copy when you fetch (or pull)
+	prune = true
+	writeCommitGraph = true
+
+[pull]
+	rebase = true
+
+[log]
+	# show branch names with git log
+	abbrevCommit = true
+	decorate = short
+	date = format:%a, %Y-%m-%d %R (%z)
+	follow = true
+	graphColors = 1,2,3,4,5,6,8,166,9,10,11,12,13,14,15,208
+	showRoot = true
+	mailmap = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[alias]
+	a = add
+	st = status -sb
+	fresh = !"git clean -x -d -f"
+
+	# Worktrees
+	wt = worktree
+	lswt = worktree list
+	mkwt = "!f() { git worktree add \"$(git rev-parse --show-toplevel)+$@\"; }; f"
+	rmwt = "!f() { git worktree remove \"$(git rev-parse --show-toplevel)+$@\"; }; f"
+
+	# Commits
+	c = commit
+	ca = commit -a
+	cm = commit -m
+	cam = commit -am
+
+	# Branches
+	pu = push                           
+	pl = pull                           
+	fe = fetch                          
+	co = checkout                       
+	cob = checkout -b					
+
+	# Diff and Merge
+	cp = cherry-pick
+	mmm = !git fetch origin master && git merge origin/master --no-edit
+	d = diff
+	dt = difftool
+	dtg = !"git difftool -g"
+	dtlast = !"git difftool HEAD@{1}"
+
+	# Work-in-progress
+	wip = !git add -A && git commit -m 'WIP'
+
+	# Drop current changes
+	drop = !git stash && git stash drop
+
+	# revert last commit
+	undo = reset HEAD~1 --mixed  		
+
+	# revert added files 
+	unstage = reset HEAD --      		
+	ua = reset HEAD
+
+	# revert all modifications
+	rev = reset HEAD~1 --hard        
+
+	# add and commit all changed files
+	cm = !git add -A && git commit -m   
+
+	# Update including submodules
+	up = !git pull --rebase --prune $@ && git submodule update --init --recursive  
+
+	# Total obliteration
+	wipe = !git add -A && git commit -qm  WIPE SAVEPOINT  && git reset HEAD~1 --hard
+
+    # List tracked files
+    tracked = ls-files
+
+	# show last commit in directory
+	slc = !"git show $(git lcd)"  
+
+	# Last modified by
+	lum = log -s -n1 --pretty='format:%an %ae%n'
+
+	# List of files with merge conflicts
+	wtf = diff --name-only --diff-filter=U
+
+	# Rebase: add changes and continue
+	cont = !git add . && git rebase --continue
+
+	# Rebase: skip a rebase step
+	skip = rebase --skip
+
+	# Rebase: abort
+	abort = rebase --abort
+
+	# Cancel local commits in the branch: git fuck master
+	fuck = "!f() { git reset --hard origin/$1; }; f"	
+
+	# Log with list of changed files for each commit
+	ll = log --stat --abbrev-commit
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg = lg1
+
+	# List of my own commits
+	my = log --branches=* --no-merges  --date=short --author='Nick Ferguson' --pretty=format:'%C(magenta)%h%C(blue)%d%Creset %s %C(blue bold)- %an, %ar%Creset'
+    dlm = "!git fetch && git branch --merged | egrep -v 'master' | egrep -v 'main' | xargs git branch -d"
+
+	# List of branches ordered by last change
+	branches = for-each-ref --sort=-committerdate refs/heads/ --format='%(color:bold)%(refname:short)%(color:reset)\t%(committerdate:relative)'
+
+    # Conventional commits
+	build = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"build(${scope}): ${@}\"; else git commit -m \"build: ${@}\"; fi }; a"
+	chore = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"chore(${scope}): ${@}\"; else git commit -m \"chore: ${@}\"; fi }; a"
+	ci = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"ci(${scope}): ${@}\"; else git commit -m \"ci: ${@}\"; fi }; a"
+	docs = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"docs(${scope}): ${@}\"; else git commit -m \"docs: ${@}\"; fi }; a"
+	feat = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"feat(${scope}): ${@}\"; else git commit -m \"feat: ${@}\"; fi }; a"
+	fix = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"fix(${scope}): ${@}\"; else git commit -m \"fix: ${@}\"; fi }; a"
+	perf = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"perf(${scope}): ${@}\"; else git commit -m \"perf: ${@}\"; fi }; a"
+	refactor = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"refactor(${scope}): ${@}\"; else git commit -m \"refactor: ${@}\"; fi }; a"
+	revert = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"revert(${scope}): ${@}\"; else git commit -m \"revert: ${@}\"; fi }; a"
+	style = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"style(${scope}): ${@}\"; else git commit -m \"style: ${@}\"; fi }; a"
+	test = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"test(${scope}): ${@}\"; else git commit -m \"test: ${@}\"; fi }; a"
+
+[pretty]
+	lo  = tformat:%C(auto)%h%C(reset)%C(auto)%d%C(reset) %s %C(italic blue)%ad%C(reset) %C(241)%aN%C(reset)
+	lc  =  format:%C(auto)%h%C(reset) %C(white)-%C(reset) %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%C(auto)%d%C(reset)%n %C(white)⤷%C(reset) %s %C(241)- %aN <%aE>%C(reset)%n
+	lt  =  format:%C(auto)%h%C(reset) %C(white)-%C(reset) %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%C(auto)%d%C(reset)%n %C(white)⤷%C(reset) %s %C(241)- %aN <%aE>%C(reset)%n%w(0,7,7)%+(trailers:only,unfold)
+	lf  =  format:%C(auto)%h%C(reset)%C(auto)%d%C(reset)   %C(italic 239)[P: %p] [T: %t]%C(reset)%n%C(white)Author:%C(reset)   %aN %C(241)<%aE>%C(reset)%n          %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%n%C(white)Commit:%C(reset)   %cN %C(241)<%cE>%C(reset)   %C(italic 239)[GPG: %G?% GK]%C(reset)%n          %C(italic blue)%cd%C(reset) %C(italic cyan)(%cr)%C(reset)%w(0,4,4)%n%n%C(bold)%s%C(reset)%n%n%-b%n%n%-N%n
+	rlo = tformat:%C(auto)%h%C(reset) %C(bold yellow)(%C(magenta)%gd%C(bold yellow))%C(reset)%C(auto)%d%C(reset) %gs %C(italic blue)%ad%C(reset) %C(241)%aN%C(reset)
+	rlc =  format:%C(auto)%h%C(reset) %C(white)-%C(reset) %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%C(auto)%d%C(reset)%n %C(white)⤷%C(reset) %s %C(241)- %aN <%aE>%C(reset)%n %C(white)⤷%C(reset) %C(bold yellow)(%C(magenta)%gd%C(bold yellow))%C(reset) %gs %C(241)- %gN <%gE>%C(reset)%n
+	rlt =  format:%C(auto)%h%C(reset) %C(white)-%C(reset) %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%C(auto)%d%C(reset)%n %C(white)⤷%C(reset) %s %C(241)- %aN <%aE>%C(reset)%n %C(white)⤷%C(reset) %C(bold yellow)(%C(magenta)%gd%C(bold yellow))%C(reset) %gs %C(241)- %gN <%gE>%C(reset)%n%w(0,7,7)%+(trailers:only,unfold)
+	rlf =  format:%C(auto)%h%C(reset) %C(bold yellow)(%C(magenta)%gd%C(bold yellow))%C(reset)%C(auto)%d%C(reset)   %C(italic 239)[P: %p] [T: %t]%C(reset)%n%C(white)Author:%C(reset)   %aN %C(241)<%aE>%C(reset)%n          %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%n%C(white)Commit:%C(reset)   %cN %C(241)<%cE>%C(reset)   %C(italic 239)[GPG: %G?% GK]%C(reset)%n          %C(italic blue)%cd%C(reset) %C(italic cyan)(%cr)%C(reset)%n%C(white)Reflog:%C(reset)   %gN %C(241)<%gE>%C(reset)%n       
+
+
+[includeIf "hasconfig:remote.*.url:https://github.com/ThreatX/**"]
+  path = ~/Work/.gitconfig-threatx
+
+[includeIf "hasconfig:remote.*.url:git@github.com:ThreatX/**"]
+  path = ~/Work/.gitconfig-threatx
+
+
+[include]
+  path = ~/.config/git/ksdiff
+
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+

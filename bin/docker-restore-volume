@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+[[ -z "$1" ]] && echo "Please provide target volume name." && exit 1
+
+target_vol="$1"
+src_archive="$PWD/${target_vol}.tar.bz2"
+
+[[ ! -z "$2" ]] && src_archive="$2"
+[[ ! -f "${src_archive}" ]] && echo "'${src_archive}' not found." && exit 1
+
+# start the restore
+echo "Restoring '${src_archive}' as named volume '${target_vol}'..."
+
+# move the tarball to tmp to prep for mount into temp container
+cp -f "${src_archive}" "/tmp/${target_vol}.tar.bz2"
+
+# create the target volume if it doesnt exist
+if [[ -z `docker volume ls | awk '{print $2}' | grep ^${target_vol}$` ]]; then
+	echo "${taget_vol} not found. Creating now."
+	docker volume create $target_vol
+fi
+
+docker run \
+	--rm \
+	-v ${target_vol}:/volume \
+	-v /tmp:/backup \
+	alpine \
+	sh -c "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/${target_vol}.tar.bz2"

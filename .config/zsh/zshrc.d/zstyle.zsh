@@ -1,14 +1,8 @@
-##: # 25.1 Completino options
 
-## 25.3 - init completion system
-
-zle -C _expand_alias complete-word _generic
-##: 25.5 Completion Styles
-zstyle ':omz:plugins:iterm2 shell-integration' yes
 zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
 zstyle ':autocomplete:*history*:*' insert-unambiguous yes
 zstyle ':autocomplete:menu-search:*' insert-unambiguous yes
-# Use cache for commands using cache
+
 zstyle ':completion:*' completer _extensions _complete _approximate
 # Use cache for commands using cache
 zstyle ':completion:*' use-cache on
@@ -38,4 +32,4 @@ zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions co
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' keep-prefix true
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
-#zstyle '*:compinit' arguments -D -i -u -C -w
+

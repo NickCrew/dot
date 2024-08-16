@@ -1,0 +1,3 @@
+#!/bin/bash
+
+fortune "$(brew --prefix)/Cellar/fortune/9708/share/games/fortunes/computers"

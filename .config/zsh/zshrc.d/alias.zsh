@@ -22,41 +22,44 @@ alias 8='cd -8'
 alias 9='cd -9'
 
 
-#
-# Directories
-#
 alias md='mkdir -p'
 alias rd=rmdir
 
 
+if [[ -v commands[lsd] ]]; then
+  alias ls='lsd --color=auto --icon=auto --group-directories-first'
+  alias l='ls'
+  alias ll='ls --long --git'
+  alias la='ls --long --git --almost-all'
+else
+  alias lsa='ls -lah'
+  alias ll='ls -lh'
+  alias la='ls -lAh'
+fi
 
-# List directory contents
-alias lsa='ls -lah'
-alias l='ls -lah'
-alias ll='ls -lh'
-alias la='ls -lAh'
+[[ -v commands[bat] ]] && alias bat='bat --style=numbers --color=always'
 
+[[ -v commands[fd] ]] && alias find='fd'
 
 #
 # Apps / Integrations
 # 
-alias d='docker'
 alias dc='docker compose'
 alias dea='direnv allow'
 alias dots='git --git-dir=$HOME/.dot.git --work-tree=$HOME'
 alias g='git'
 alias gac='gimme-aws-creds'
-alias gt='gittower' 
+alias gtw='gittower' 
 alias lg='lazygit'
-alias ls='eza'
-alias nv='neovide'
-alias p='poetry'
+alias po='poetry'
 alias rr='ranger'
 alias sto='stow -d ~/.fosto -t ~/ '
 alias tf='terraform'
 alias tg='terragrunt'
 alias v='nvim'
 alias k='kubectl'
-alias wstt='wezterm cli set-tab-title'
+alias wtst='wezterm cli set-tab-title'
 alias wt='wezterm'
+alias xx='xplr'
+alias xzsh='exec zsh'
 alias x='xplr'
