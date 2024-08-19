@@ -11,3 +11,5 @@ hashes
 tx.zsh
 *.log
 .iterm2*
+*zlocal*
+*plugins*
