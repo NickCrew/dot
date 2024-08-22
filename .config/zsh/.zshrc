@@ -184,6 +184,8 @@ zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f
 ################ KEYBINDINGS [[
 
 
+complete -o nospace -C /usr/local/bin/terraform terraform
+
 source ~/.fzf/shell/{key-bindings,completions}.zsh 
 # RUST
 # FZF
@@ -247,7 +249,6 @@ bindkey '^w' backward-kill-word
 # CTRL-R for history search
 bindkey '^r' atuin-search-viins
 # ]]
-
 
  export LS_COLORS="$(vivid generate tokyonight-moon)"
 eval "$(brew shellenv zsh)"

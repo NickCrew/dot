@@ -32,6 +32,9 @@ require("xpm").setup({
     {name = "sayanarijit/tri-pane.xplr"},
     {name = 'sayanarijit/context-switch.xplr'},
     {name = 'sayanarijit/find.xplr'},
+    {name = 'sayanarijit/tree-view.xplr'},
+     {name = 'dy-sh/dysh-style.xplr '},
+
     {name = 'sayanarijit/nvim-ctrl.xplr'},
     {name = 'sayanarijit/zoxide.xplr'},
     {name = 'dtomvan/extra-icons.xplr'}
@@ -50,3 +53,5 @@ require("fzf").setup()
 require("tri-pane").setup()
 require("registers").setup()
 require("context-switch").setup()
+require("tree-view").setup()
+

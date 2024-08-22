@@ -29,8 +29,9 @@ alias rd=rmdir
 if [[ -v commands[lsd] ]]; then
   alias ls='lsd --color=auto --icon=auto --group-directories-first'
   alias l='ls'
-  alias ll='ls --long --git'
-  alias la='ls --long --git --almost-all'
+  alias lg='ls --long --git --almost-all'
+  alias la='ls --long --almost-all'
+  alias ll='ls --long'
 else
   alias lsa='ls -lah'
   alias ll='ls -lh'
