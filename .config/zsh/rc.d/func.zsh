@@ -78,4 +78,7 @@ function find-port-process () {
   fi
 }
 
+function tf-lint () {
+  tflint --chdir="${1:-.}" --config="${2:-$HOME/.tflint.hcl}" 
+}
 

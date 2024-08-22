@@ -1,24 +1,31 @@
-#  vim: foldmethod=marker  foldmarker=[[,]]
+#  vim: foldmethod=marker  foldmarker={{{,}}}
 # .zshrc
 
 
-################## INITIALIZE #####################[[
+################## INITIALIZE #####################{{{
 
+# Start profiling
+zmodload zsh/zprof  
 
 # Instant Prompt
 if [[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 
 fi
-# Start profiling
-zmodload zsh/zprof  
+
+
+# Custom RC files to source
 export ZSHRCD=$ZDOTDIR/rc.d
+
 # Load plugin manager
 source $ZSHRCD/unplugged.zsh 
 
 # Function path
 fpath+="${ZSH_CACHE_DIR}/completions"     
+
+# vi  mode
 bindkey -v
 
+# PATH
 path=(
   "$HOME/.cargo/bin" 
   "$HOME/.fzf/bin" 
@@ -37,15 +44,15 @@ path=(
 typeset -U path
 export PATH
 
+# Init Completion
+zmodload zsh/complist  
+zle -C _expand_alias complete-word _generic
 
-#]]
+#}}}
 
 
-################## INSTALL PLUGINS [[
-
+################## INSTALL PLUGINS {{{
 #
-# INSTALL PLUGINS
-# 
 repos=(
   # projects with nested plugins
   ohmyzsh/ohmyzsh
@@ -59,18 +66,9 @@ repos=(
   zdharma-continuum/fast-syntax-highlighting
 )
 plugin-clone $repos
-#]]
+#}}}
 
-zmodload zsh/complist  
-zle -C _expand_alias complete-word _generic
-
-
-############### ENVIRONMENT [[
-# EDITOR
-
-# ]]
-
-############### Setopts [[
+############### SETOPTS {{{
 
 # History
 setopt bang_hist				# Perform textual history expansion, csh-style, treating the character ‘!’ specially.
@@ -108,9 +106,9 @@ setopt auto_menu                # show completion menu on successive tab press
 setopt always_to_end
 unsetopt complete_aliases       # Make aliases work with completion nicely
 unsetopt flowcontrol
-#]]
+#}}}
 
-################ SOURCE PLUGINS [[
+################ SOURCE PLUGINS {{{
 
 
 #  LOAD PLUGINS
@@ -137,13 +135,14 @@ plugins=(
   ohmyzsh/plugins/jsontools
   ohmyzsh/plugins/zoxide
 )
+
 plugin-source $plugins
 
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-#]]
+#}}}
 
-################ ZSTYLE [[
+################ ZSTYLE {{{
 
 # Autocomplete
 zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
@@ -179,16 +178,15 @@ zstyle ':completion:*:*:-command-:*:*' group-order aliases builtins functions co
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' keep-prefix true
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
-# ]]
+#}}}
 
-################ KEYBINDINGS [[
+################ INTEGRATIONS {{{
 
-
+# TERRAFORM
 complete -o nospace -C /usr/local/bin/terraform terraform
 
+# FZF : fuzzy finder
 source ~/.fzf/shell/{key-bindings,completions}.zsh 
-# RUST
-# FZF
 export FZF_COMPLETION_TRIGGER=';;'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -215,10 +213,16 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -n 10'"
 export FZF_CTRL_T_OPTS="--walker-skip .git --preview 'bat --style=numbers --color=always {}' --bind '?:toggle-preview'"
 export FZF_COMPLETION_DIR_COMMANDS="cd pushd rmdir tree ls"
 
+# ATUIN : better history
+eval "$(atuin init zsh --disable-up-arrow)"
 
+# }}}
+
+# Functions and aliases
 source $ZSHRCD/func.zsh
 source $ZSHRCD/aliases.zsh
-eval "$(atuin init zsh --disable-up-arrow)"
+
+################ KEYBINDINGS {{{
 
 bindkey -M menuselect 'h' vi-backward-char				 # Left
 bindkey -M menuselect 'k' vi-up-line-or-history				# Up
@@ -248,9 +252,12 @@ bindkey '^w' backward-kill-word
 
 # CTRL-R for history search
 bindkey '^r' atuin-search-viins
-# ]]
 
- export LS_COLORS="$(vivid generate tokyonight-moon)"
+# }}}
+
+
 eval "$(brew shellenv zsh)"
+
 fpath+="$(brew --prefix)/share/zsh/site-functions"
+
 source $ZSHRCD/after/zlocal.zsh
