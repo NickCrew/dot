@@ -82,20 +82,19 @@ setopt hist_verify              # show command with history expansion to user be
 setopt inc_append_History		# Add new lines to the history file immediately (do not wait until exit)
 setopt share_history          	# Share command history data
 unsetopt hist_beep				# Shut up shut up shut up
-
-
+# Directories
 setopt auto_cd                  # Change to directory without cd 
 setopt auto_pushd               # Push the old directory onto the directory stack
 setopt pushd_ignore_dups        # Don't push multiple copies of the same directory onto the directory stack
 setopt pushdminus               # Use pushd to rotate the stack so that the current directory is always on top
 # Misc
 setopt notify			        # notify when background job finishes				
-unsetopt clobber		        # Allow overwriting existing files
 setopt ignore_eof		        # Don't exit on EOF
 setopt local_options	        # Allow fucntions to have local options
 setopt local_traps		        # Allow functions to have local traps
+unsetopt clobber		        # Allow overwriting existing files
 unsetopt beep			        # shut up shut up shut up
-
+# Completion
 setopt glob_complete			# Show autocompletion menu with globs
 setopt menu_complete			# Automatically highlight first element of completion menu
 setopt auto_list				# Automatically list choices on ambiguous completion.
@@ -118,7 +117,7 @@ plugins=(
 
   fast-syntax-highlighting
   zsh-autocomplete
-  # zsh-autosuggestions
+  zsh-autosuggestions
   zsh-completions
   bd
 
@@ -127,6 +126,7 @@ plugins=(
   ohmyzsh/plugins/colored-man-pages
   ohmyzsh/plugins/colorize
   ohmyzsh/plugins/direnv
+  ohmyzsh/plugins/dircycle
   ohmyzsh/plugins/emoji
   ohmyzsh/plugins/fancy-ctrl-z
   ohmyzsh/plugins/forklift
@@ -134,6 +134,7 @@ plugins=(
   ohmyzsh/plugins/git
   ohmyzsh/plugins/jsontools
   ohmyzsh/plugins/zoxide
+
 )
 
 plugin-source $plugins
@@ -187,6 +188,7 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 
 # FZF : fuzzy finder
 source ~/.fzf/shell/{key-bindings,completions}.zsh 
+
 export FZF_COMPLETION_TRIGGER=';;'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -234,8 +236,8 @@ bindkey -M menuselect '^xh' accept-and-hold                	# Hold
 bindkey -M menuselect '^xn' accept-and-infer-next-history  	# Next
 bindkey -M menuselect '^xu' undo                           	# Undo
 
-bindkey              '^I'         menu-select
-bindkey "$terminfo[kcbt]" reverse-menu-select
+bindkey              '^I'         menu-complete
+bindkey "$terminfo[kcbt]" reverse-menu-complete
 
 # This makes ← and → always move the cursor on the command line, even when you are in the menu:
 bindkey -M menuselect  '^[[D' .backward-char  '^[OD' .backward-char
@@ -257,7 +259,9 @@ bindkey '^r' atuin-search-viins
 
 
 eval "$(brew shellenv zsh)"
-
 fpath+="$(brew --prefix)/share/zsh/site-functions"
 
+source /Users/nick/.config/broot/launcher/bash/br
+
 source $ZSHRCD/after/zlocal.zsh
+

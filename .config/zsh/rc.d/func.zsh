@@ -82,3 +82,12 @@ function tf-lint () {
   tflint --chdir="${1:-.}" --config="${2:-$HOME/.tflint.hcl}" 
 }
 
+function omz-info () {
+  cat "$HOME/.local/share/zsh/omz/plugins/$(ls ~/.local/share/zsh/omz/plugins | fzf)/README.md"
+}
+
+function search-from-top () {
+  cd "$(git rev-parse --show-toplevel 2>/dev/null)"
+  fzf-cd-widget
+}
+
