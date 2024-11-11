@@ -5,6 +5,7 @@
 
 [diff]
 	tool = Kaleidoscope
+    colorMoved = default
 
 [difftool "Kaleidoscope"]
 	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
@@ -15,6 +16,7 @@
 
 [merge]
 	tool = Kaleidoscope
+    conflictsyle = diff3
 
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot

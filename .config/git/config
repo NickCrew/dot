@@ -10,6 +10,20 @@
 	preloadindex = true
     pager = delta
 
+[interactive]
+  diffFilter = delta --color-only
+  
+[delta]
+  features = side-by-side line-numbers decorations
+  whitespace-error-style = 22 reverse
+  line-numbers = true
+  decorations = true
+  syntax-theme = Monokai Extended
+  minus-emph-background-style = 52
+  plus-emph-background-style = 22
+  minus-style = "syntax #880000"
+  plus-style = "syntax #005500"
+  theme = Monokai Extended
 
 [user]
 	name = Nick Ferguson
@@ -152,7 +166,7 @@
 	# Log with list of changed files for each commit
 	ll = log --stat --abbrev-commit
     lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg2 = log --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
     lg = lg1
 
 	# List of my own commits
@@ -197,8 +211,11 @@
   path = ~/.config/git/ksdiff
 
 [credential "https://github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
+
 [credential "https://gist.github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
 
 

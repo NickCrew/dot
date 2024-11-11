@@ -21,11 +21,18 @@ alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
 
-
+# File management
 alias md='mkdir -p'
 alias rd=rmdir
+alias dea='direnv allow'
+alias xx='xplr'
+alias rr='ranger'
 
+# Dotfiles
+alias sto='stow -d ~/.fosto -t ~/ '
+alias dots='git --git-dir=$HOME/.dot.git --work-tree=$HOME'
 
+# List files
 if [[ -v commands[lsd] ]]; then
   alias ls='lsd --color=auto --icon=auto --group-directories-first'
   alias l='ls'
@@ -38,30 +45,37 @@ else
   alias la='ls -lAh'
 fi
 
+# Cat
 [[ -v commands[bat] ]] && alias bat='bat --style=numbers --color=always'
 
-[[ -v commands[fd] ]] && alias find='fd'
-
-#
-# Apps / Integrations
-# 
+# ZSH
+alias xzsh='exec zsh'
+# Development
 alias dc='docker compose'
-alias dea='direnv allow'
-alias dots='git --git-dir=$HOME/.dot.git --work-tree=$HOME'
+alias po='poetry'
+# Git
 alias g='git'
-alias gac='gimme-aws-creds'
 alias gtw='gittower' 
 alias lg='lazygit'
-alias po='poetry'
-alias rr='ranger'
-alias sto='stow -d ~/.fosto -t ~/ '
-alias tf='terraform'
-alias tg='terragrunt'
-alias v='nvim'
-alias k='kubectl'
-alias wtst='wezterm cli set-tab-title'
-alias wt='wezterm'
-alias xx='xplr'
-alias xzsh='exec zsh'
-alias x='xplr'
 alias gz='search-from-top'
+# Cloud
+alias k='kubectl'
+alias tf='terraform'
+alias gac='gimme-aws-creds'
+alias tg='terragrunt'
+# Wezterm
+alias wt='wezterm'
+alias wtst='wezterm cli set-tab-title'
+# Neovim
+alias nvi="nvr --remote-silent"
+alias v='~/opt/nvim-macos-x86_64/bin/nvim'
+alias nvs='nvr --remote-silent'
+alias nvws='nvr --remote-wait-silent'
+alias nvt='nvr --remote-tab'
+alias nvts='nvr --remote-tab-silent'
+
+
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+

@@ -46,80 +46,55 @@ end
 config.leader = { key = "g", mods = "SUPER", timeout_millseconds = 1000 }
 
 config.keys = {
-  -- Window size -------------------------------------------------------------------------------------
+  -- WINDOW SIZE -------------------------------------------------------------------------------------
   { key = "z",        mods = "ALT",        action = wt.action.TogglePaneZoomState },
   { key = "F11",      mods = "LEADER",     action = wt.action.ToggleFullScreen },
-  -- Adust Font size ---------------------------------------------------------------------------------
+  -- FONT SIZE ---------------------------------------------------------------------------------
   { key = "=",        mods = "CTRL|SHIFT", action = wt.action.IncreaseFontSize },
   { key = "-",        mods = "CTRL|SHIFT", action = wt.action.DecreaseFontSize },
-  -- Copy / Paste ----------------------------------------------------------------------------------
+  -- COPY / PASTE ----------------------------------------------------------------------------------
   { key = "x",        mods = "LEADER",     action = wt.action.ActivateCopyMode },
-{ key = "s",        mods = "LEADER",     action = wt.action.ActivateCopyMode },
-
-
+  { key = "s",        mods = "LEADER",     action = wt.action.QuickSelect },
   { key = "c",        mods = "LEADER",     action = wt.action.CopyTo("Clipboard") },
   { key = "v",        mods = "LEADER",     action = wt.action.PasteFrom("Clipboard") },
-  -- Scroll -----------------------------------------------------------------------------------------
-  { key = 'PageDown', mods = 'SHIFT',      action = wt.action.ScrollByPage(1) },
-  { key = 'PageUp',   mods = 'SHIFT',      action = wt.action.ScrollByPage(-1) },
-
-  { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
-  { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
-  -- Saved searches ---------------------------------------------------------------------------------
-  -- See: https://wezfurlong.org/wezterm/scrollback.html#configuring-saved-searches
-  --
-  {
-    key = 'f',
-    mods = 'LEADER',
-    action = wt.action.Search { Regex = '[a-f0-9]{6,}' },   -- Git hashes
-  },
-  {
-    key = 'r',
-    mods = 'LEADER',
-    action = act.ActivateKeyTable {
-      name = 'resize_pane',
-      one_shot = false,
-    },
-  },
-
-  -- CTRL+SHIFT+Space, followed by 'a' will put us in activate-pane
-  -- mode until we press some other key or until 1 second (1000ms)
-  -- of time elapses
-  {
-    key = 'a',
-    mods = 'LEADER',
-    action = act.ActivateKeyTable {
-      name = 'activate_pane',
-      timeout_milliseconds = 1000,
-    },
-  },
-  -- Adust pane size ---------------------------------------------------------------------------------
-  { key = "h", mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Left", 5 }) },
-  { key = "k", mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Up", 5 }) },
-  { key = "l", mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Right", 5 }) },
-  { key = "j", mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Down", 5 }) },
-  -- Move between panes -------------------------------------------------------------------------------
-  { key = 'h', mods = 'SUPER',       action = wt.action.ActivatePaneDirection 'Left', },
-  { key = 'k', mods = 'SUPER',       action = wt.action.ActivatePaneDirection 'Up', },
-  { key = 'j', mods = 'SUPER',       action = wt.action.ActivatePaneDirection 'Down', },
-  { key = 'l', mods = 'SUPER',       action = wt.action.ActivatePaneDirection 'Right', },
-  -- Split panes --------------------------------------------------------------------------------------
-  { key = "q", mods = "LEADER",      action = wt.action.CloseCurrentPane({ confirm = false }) },
-  { key = "v", mods = "LEADER",      action = wt.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
-  { key = "h", mods = "LEADER",      action = wt.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
-  -- Switch tab ---------------------------------------------------------------------------------------
-  { key = "1", mods = "SUPER",       action = wt.action({ ActivateTab = 0 }) },
-  { key = "2", mods = "SUPER",       action = wt.action({ ActivateTab = 1 }) },
-  { key = "3", mods = "SUPER",       action = wt.action({ ActivateTab = 2 }) },
-  { key = "4", mods = "SUPER",       action = wt.action({ ActivateTab = 3 }) },
-  { key = "5", mods = "SUPER",       action = wt.action({ ActivateTab = 4 }) },
-  { key = "6", mods = "SUPER",       action = wt.action({ ActivateTab = 5 }) },
-  { key = "7", mods = "SUPER",       action = wt.action({ ActivateTab = 6 }) },
-  { key = "8", mods = "SUPER",       action = wt.action({ ActivateTab = 7 }) },
-  { key = "9", mods = "SUPER",       action = wt.action({ ActivateTab = 8 }) },
+  -- SCROLLBACK -----------------------------------------------------------------------------------------
+  { key = 'PageDown',  mods = 'SHIFT',     action = wt.action.ScrollByPage(1) },
+  { key = 'PageUp',    mods = 'SHIFT',     action = wt.action.ScrollByPage(-1) },
+  { key = 'UpArrow',   mods = 'SHIFT',     action = act.ScrollToPrompt(-1) },
+  { key = 'DownArrow', mods = 'SHIFT',     action = act.ScrollToPrompt(1) },
+  -- SEARCH ---------------------------------------------------------------------------------
+  -- { key = "f",          mods = "SUPER",     action = wt.action.Search },
+  { key = 'f',         mods = 'LEADER',    action = wt.action.Search { Regex = '[a-f0-9]{6,}' } },
+  { key = 'r',         mods = 'LEADER',    action = act.ActivateKeyTable { name = 'resize_pane', one_shot = false } },
+  { key = 'a',         mods = 'LEADER',    action = act.ActivateKeyTable { name = 'activate_pane', timeout_milliseconds = 1000 } },
+  -- ADUST PANES ---------------------------------------------------------------------------------
+  { key = "h",         mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Left", 5 }) },
+  { key = "k",         mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Up", 5 }) },
+  { key = "l",         mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Right", 5 }) },
+  { key = "j",         mods = "SHIFT|SUPER", action = wt.action.AdjustPaneSize({ "Down", 5 }) },
+  { key = "q",         mods = "LEADER",      action = wt.action.CloseCurrentPane({ confirm = false }) },
+  -- SPLIT PANES --------------------------------------------------------------------------------------
+  { key = "v",         mods = "LEADER",      action = wt.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+  { key = "h",         mods = "LEADER",      action = wt.action({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+  -- NAVIGATE PANES -------------------------------------------------------------------------------
+  { key = 'h',          mods = 'SUPER',      action = wt.action.ActivatePaneDirection 'Left', },
+  { key = 'k',          mods = 'SUPER',      action = wt.action.ActivatePaneDirection 'Up', },
+  { key = 'j',          mods = 'SUPER',      action = wt.action.ActivatePaneDirection 'Down', },
+  { key = 'l',          mods = 'SUPER',      action = wt.action.ActivatePaneDirection 'Right', },
+  -- SWITCH TAB ---------------------------------------------------------------------------------------
+  { key = "o",           mods = "LEADER",    action = wt.action.ActivateLastTab },
+  { key = "1",           mods = "LEADER",    action = wt.action({ ActivateTab = 0 }) },
+  { key = "2",           mods = "LEADER",    action = wt.action({ ActivateTab = 1 }) },
+  { key = "3",           mods = "LEADER",    action = wt.action({ ActivateTab = 2 }) },
+  { key = "4",           mods = "LEADER",    action = wt.action({ ActivateTab = 3 }) },
+  { key = "5",           mods = "LEADER",    action = wt.action({ ActivateTab = 4 }) },
+  { key = "6",           mods = "LEADER",    action = wt.action({ ActivateTab = 5 }) },
+  { key = "7",           mods = "LEADER",    action = wt.action({ ActivateTab = 6 }) },
+  { key = "8",           mods = "LEADER",    action = wt.action({ ActivateTab = 7 }) },
+  { key = "9",           mods = "LEADER",    action = wt.action({ ActivateTab = 8 }) },
   -- Launcher ------------------------------------------------------------------------------------------
-  { key = "l", mods = "LEADER",      action = wt.action.ShowLauncher },
-  { key = '9', mods = 'LEADER',      action = wt.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' }, },
+  { key = "l",           mods = "LEADER",     action = wt.action.ShowLauncher },
+  { key = '9',           mods = 'LEADER',     action = wt.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' }, },
   -- Switch Workspaces ---------------------------------------------------------------------------------
   { key = ']', mods = 'LEADER',      action = wt.action.SwitchWorkspaceRelative(1) },
   { key = '[', mods = 'LEADER',      action = wt.action.SwitchWorkspaceRelative(-1) },
