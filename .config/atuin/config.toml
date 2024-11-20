@@ -48,7 +48,7 @@ filter_mode = "global"
 ## in any directory within a git repository tree (default: false)
 # workspaces = false
 
-## which filter mode to use when atuin is invoked from a shell up-key binding
+ ## which filter mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "filter_mode"
 ## leave unspecified to use same mode set in "filter_mode"
 filter_mode_shell_up_key_binding = "directory"
@@ -60,11 +60,11 @@ filter_mode_shell_up_key_binding = "directory"
 
 ## which style to use
 ## possible values: auto, full, compact
-# style = "auto"
+style = "compact"
 
 ## the maximum number of lines the interface should take up
 ## set it to 0 to always go full screen
-# inline_height = 0
+ inline_height = 25
 
 ## Invert the UI - put the search bar at the top , Default to `false`
 # invert = false

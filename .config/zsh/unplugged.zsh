@@ -1,3 +1,4 @@
+
 #
 # minimal plugin and file loader
 #
@@ -87,16 +88,3 @@ function plugin-compile {
   done
 }
 
-
-##: rc-load
-##:
-##: load a file from the rc.d directory
-function snippet-source {
-  ZSHRCD=${ZSHRCD:-${ZDOTDIR:-$HOME}/.config/zsh/rc.d}
-  local f
-
-  for f in $@; do
-    [[ $f = /* ]] || f=$ZSHRCD/${f}.zsh
-    source $f
-  done
-}

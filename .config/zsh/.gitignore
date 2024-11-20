@@ -1,4 +1,3 @@
-
 .zsh_sessions/
 .zcomet/
 .zlocal*
@@ -13,3 +12,5 @@ tx.zsh
 .iterm2*
 *zlocal*
 *plugins*
+local.zsh
+local.d/
