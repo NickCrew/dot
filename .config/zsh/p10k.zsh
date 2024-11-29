@@ -38,8 +38,7 @@
     # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     # example               # example user-defined segment (see prompt_example function below)
     # per_directory_history   # Oh My Zsh per-directory-history local/global indicator
-    kubecontext             # current kubernetes context (https://kubernetes.io/)
-    newline
+    #newline
     #
     os_icon                 # os identifier
     context
@@ -68,8 +67,9 @@
     # newline
     # todo
     # timewarrior
+    #
+    kubecontext             # current kubernetes context (https://kubernetes.io/)
     aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-    newline
     direnv                  # direnv status (https://direnv.net/)
     node_version          # node.js version
     go_version            # go version (https://golang.org)
@@ -155,12 +155,12 @@
 #   typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=' '
 
   # Connect right prompt lines with these symbols.
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%244F ─╮'
-  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%244F ─┤'
-  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%244F ─╯'
-   # typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=' '
-   # typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=' '
-   # typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX=' '
+  # typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%244F ─╮'
+  # typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%244F ─┤'
+  # typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%244F ─╯'
+   typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=' '
+   typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=' '
+   typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX=' '
 
 
   # The left end of left prompt.
@@ -341,7 +341,7 @@
      typeset -g POWERLEVEL9K_DIR_DEFAULT_ANCHOR_FOREGROUND=39
       # Styling for WORK.
     typeset -g POWERLEVEL9K_DIR_WORK_VISUAL_IDENTIFIER_EXPANSION='  '
-     typeset -g POWERLEVEL9K_DIR_WORK_FOREGROUND=9
+     typeset -g POWERLEVEL9K_DIR_WORK_FOREGROUND=13
      typeset -g POWERLEVEL9K_DIR_WORK_SHORTENED_FOREGROUND=8
      typeset -g POWERLEVEL9K_DIR_WORK_ANCHOR_FOREGROUND=39
      # Styling for PERSONAL
@@ -1235,11 +1235,14 @@
   #   typeset -g POWERLEVEL9K_KUBECONTEXT_TEST_CONTENT_EXPANSION='> ${P9K_CONTENT} <'
   typeset -g POWERLEVEL9K_KUBECONTEXT_CLASSES=(
        '*production*' PROD
+       '*-prod-*'       PROD
+       '*-pd-*'       PROD
+       '*-np-*'       NONPROD
        '*nonprod*'    NONPROD    # These values are examples that are unlikely
        '*sandbox*'    SANDBOX    # to match your needs. Customize them as needed.
        '*'            DEFAULT)
-  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=134
-  typeset -g POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND=196
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=15
+  typeset -g POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND=134
   typeset -g POWERLEVEL9K_KUBECONTEXT_NONPROD_FOREGROUND=85
   typeset -g POWERLEVEL9K_KUBECONTEXT_SANDBOX_FOREGROUND=81
   typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⚪'
@@ -1296,7 +1299,7 @@
 
 
   # Custom prefix.
-  typeset -g POWERLEVEL9K_KUBECONTEXT_PREFIX='%f☸︎ kube: '
+  typeset -g POWERLEVEL9K_KUBECONTEXT_PREFIX='%f K: '
 
   ################[ terraform: terraform workspace (https://www.terraform.io) ]#################
   # Don't show terraform workspace if it's literally "default".

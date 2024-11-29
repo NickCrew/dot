@@ -88,3 +88,16 @@ function plugin-compile {
   done
 }
 
+##: rc-compile
+##:
+##: just a simple function to recompile all plugins
+function rc-compile {
+  ZSHRCD=${ZSHRCD:-$ZDOTDIR/rc.d}
+  autoload -U zrecompile
+  local f
+
+  for f in $ZSHRCD/*.zsh{,-theme}(N); do
+    zrecompile -pq "$f"
+  done
+}
+

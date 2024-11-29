@@ -1,4 +1,8 @@
- zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+export LS_COLORS=${LS_COLORS:-$(paste -sd: $ZDOTDIR/lscolors.txt)}
+
+ zle -C _expand_alias complete-word _generic
+
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
 zstyle ':autocomplete:*history*:*' insert-unambiguous yes
 zstyle ':autocomplete:menu-search:*' insert-unambiguous yes
 # Completers
@@ -32,6 +36,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 zstyle ':completion:*' keep-prefix true
 zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })' 
 
-complete -o nospace -C /usr/local/bin/terraform terraform
 
-source ~/.fzf/shell/{key-bindings,completions}.zsh 
+complete -o nospace -C terraform terraform
+source ~/.fzf/shell/completion.zsh 
+

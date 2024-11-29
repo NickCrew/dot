@@ -1,4 +1,8 @@
 
+bindkey -v  
+
+source ~/.fzf/shell/key-bindings.zsh
+
 bindkey -M menuselect 'h' vi-backward-char				    # Left
 bindkey -M menuselect 'k' vi-up-line-or-history				# Up
 bindkey -M menuselect 'j' vi-down-line-or-history           # Down
@@ -23,8 +27,9 @@ bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
  # CTRL-W removed word backwards
 bindkey '^w' backward-kill-word   
+
 # CTRL-R for history search
 bindkey '^r' atuin-search-viins
+eval "$(atuin init zsh)"
 
 
-eval "$(atuin init zsh --disable-up-arrow)"

@@ -1,1 +1,1 @@
-/Users/nick/.config/zsh/.zshenv
+.config/zsh/zshenv

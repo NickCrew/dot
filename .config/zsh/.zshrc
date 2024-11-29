@@ -1,25 +1,70 @@
-#  vim: foldmethod=marker  foldmarker={{{,}}}
+# vim: foldmethod=marker foldmarker={{{,}}}
 # .zshrc
 
-# 1.0 Initialize {{{
 
-# Start profiling
-zmodload zsh/zprof  
+[[ -z "$ZDOTDIR" ]] && export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
-# vi  mode
-bindkey -v
+export ZSHRCD="$ZDOTDIR/rc.d"
 
-# Instant Prompt
-if [[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 
-fi
-# Load prompot
-source $ZDOTDIR/p10k.zsh
+# Plugin repos  {{{
+PLUGIN_REPOS=(
+ # projects with nested plugins
+  ohmyzsh/ohmyzsh
 
-# Load the plugin manager
-source $ZDOTDIR/unplugged.zsh 
+  # regular plugins
+  jeffreytse/zsh-vi-mode
+  romkatv/powerlevel10k
+  marlonrichert/zsh-autocomplete
+  zsh-users/zsh-autosuggestions
+  zsh-users/zsh-completions
+ zdharma-continuum/fast-syntax-highlighting
+)
+# }}}
 
-# PATH
+# Plugins {{{
+PLUGINS=(
+  # zsh-vi-mod
+  
+  # Prompt
+  powerlevel10k
+
+  fast-syntax-highlighting
+  zsh-autocomplete
+  zsh-autosuggestions
+  zsh-completions
+
+  
+  # dirs and files
+  bd
+  ohmyzsh/plugins/direnv
+  ohmyzsh/plugins/dircycle
+  ohmyzsh/plugins/zoxide
+  ohmyzsh/plugins/forklift
+  ohmyzsh/plugins/jsontools
+
+  #  Cloud tools 
+  ohmyzsh/plugins/1password
+  ohmyzsh/plugins/aws
+  ohmyzsh/plugins/k9s
+  ohmyzsh/plugins/gh
+  ohmyzsh/plugins/git
+
+  # Shell
+  ohmyzsh/plugins/colored-man-pages
+  ohmyzsh/plugins/colorize
+  ohmyzsh/plugins/ssh-agent
+  ohmyzsh/plugins/fancy-ctrl-z
+)
+# }}}
+
+# Paths {{{
+fpath=(
+  "${HOMEBREW_PREFIX}/share/zsh/site-functions"
+  "${ZSH_CACHE_DIR}/completions"     
+  "${ZDOTDIR}/fn.d"           
+  $fpath
+)
+
 path=(
   "$HOME/.cargo/bin" 
   "$HOME/.fzf/bin" 
@@ -34,76 +79,30 @@ path=(
   "/usr/local/bin"
   $path
 )
+# }}}
 
-fpath+="${HOMEBREW_PREFIX}/share/zsh/site-functions"
-fpath+="${ZSH_CACHE_DIR}/completions"     
+zmodload zsh/zprof  # Profiling
 
-# Init Completion
-zmodload zsh/complist  
-zle -C _expand_alias complete-word _generic
+# Load Prompt
+if [[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 
+fi
 
-#}}}
+source $ZDOTDIR/p10k.zsh   
+source $ZDOTDIR/unplugged.zsh  
 
-PLUGIN_REPOS=(
-  # projects with nested plugins
-  ohmyzsh/ohmyzsh
-
-  # # regular plugins
-  jeffreytse/zsh-vi-mode
-  romkatv/powerlevel10k
-  marlonrichert/zsh-autocomplete
-  zsh-users/zsh-autosuggestions
-  zsh-users/zsh-completions
-  zdharma-continuum/fast-syntax-highlighting
-)
-
-PLUGINS=(
-  # zsh-vi-mode
-  ##: Prompt
-  powerlevel10k
-  ##: 
-  fast-syntax-highlighting
-  zsh-autocomplete
-  zsh-autosuggestions
-  zsh-completions
-  bd
-  # Oh My Zsh Plugins
-  ohmyzsh/plugins/1password
-  ohmyzsh/plugins/aws
-  ohmyzsh/plugins/colored-man-pages
-  ohmyzsh/plugins/colorize
-  ohmyzsh/plugins/direnv
-  ohmyzsh/plugins/dirhistory
-  ohmyzsh/plugins/k9s
-  ohmyzsh/plugins/ssh-agent
-  ohmyzsh/plugins/fancy-ctrl-z
-  ohmyzsh/plugins/forklift
-  ohmyzsh/plugins/gh
-  ohmyzsh/plugins/git
-  ohmyzsh/plugins/jsontools
-  ohmyzsh/plugins/zoxide
-)
+for f in $ZSHRCD/{aliases,options}.zsh; 
+  do source $f; 
+done
 
 plugin-clone $PLUGIN_REPOS
 plugin-source $PLUGINS
 
-
-# Load config dirs. 
-# Pay attention to order:
-# 1. aliases
-# 2. envvars
-# 3. functions
-# 4. rc fragments
-# 5. local
-for f in $ZDOTDIR/{alias,env,fn,rc,local}.d/*.zsh; do 
-  source $f
+for f in $ZSHRCD/{completion,functions,keybindings}.zsh; 
+  do source $f; 
 done
 
+source $ZDOTDIR/zlocal.zsh
 
-  # 2.0 Install Plugins {{{
-
-#}}}
-
-
-# }}}
+typeset -U path
 

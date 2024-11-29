@@ -1,0 +1,107 @@
+#
+# ~/.zshenv
+#
+###############################################################################
+
+#===========================
+# XDG
+#---------------------------
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+#===========================
+# ZSH
+#---------------------------
+
+# Places
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+export ZSHRCD="${ZDOTDIR}/rc.d"
+export ZSHFND="${ZDOTDIR}/fn.d"
+# Third-party plugin install path
+export ZPLUGINDIR="${XDG_DATA_HOME}/zsh/plugins"
+export ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
+export INFOPATH="/usr/local/share/info:${XDG_DATA_HOME}/info:${INFOPATH:-}"
+export MANPATH="/usr/local/share/man:${XDG_DATA_HOME}/man:${MANPATH:-}"
+
+# Behavior
+export KEYTIMEOUT=1
+
+# History
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=50000000
+export SAVEHIST=10000000
+
+# Editor
+export EDITOR=nvim
+export VISUAL=$EDITOR
+
+# Pager
+export PAGER=most
+export MANAPAGER=$PAGER
+
+# Man/info
+
+# GPG 
+GPG_TTY=$(tty)
+export GPG_TTY
+
+# SSH
+export SSH_CONFIG="$HOME/.ssh/config"
+export SSH_IDENTITY="$HOME/.ssh/id_ed25519"
+
+
+#===========================
+# Integrations
+#---------------------------
+
+# Homebrew
+export HOMEBREW_PREFIX="/usr/local";
+export HOMEBREW_CELLAR="/usr/local/Cellar";
+export HOMEBREW_REPOSITORY="/usr/local/Homebrew";
+
+# Docker
+export COLIMA_VM="${COLIMA_VM:-default}"
+export COLIMA_VM_SOCKET="${XDG_CONFIG_HOME:-$HOME/.config}/colima/${COLIMA_VM}/docker.sock"
+export DOCKER_HOST="unix://${COLIMA_VM_SOCKET}"
+
+# Google
+export CLOUDSDK_HOME=$HOME/opt/google-cloud-sdk
+
+# Python
+export PYENV_ROOT="$HOME/.pyenv"
+
+# Misc.
+export LDFLAGS="-L/usr/local/opt/readline/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
+export CPPFLAGS="-I/usr/local/opt/readline/include -I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
+export PKG_CONFIG_PATH="/usr/local/opt/readline/lib/pkgconfig"
+
+
+# FZF
+FZF_COLORS="bg+:-1,border:black,fg+:white,fg:gray,header:blue,hl+:red,hl:yellow,info:green,marker:blue,pointer:red,prompt:gray,spinner:0"
+export FZF_COMPLETION_TRIGGER=';;'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--height 60% --border sharp   --layout reverse --color '$FZF_COLORS' --prompt '∷ ' --pointer ▶ --marker ⇒"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -n 10'"
+export FZF_CTRL_T_OPTS="--walker-skip .git --preview 'bat --style=numbers --color=always {}' --bind '?:toggle-preview'"
+export FZF_COMPLETION_DIR_COMMANDS="cd pushd rmdir tree ls" 
+
+
+# Directories
+export zshcfg=$HOME/.config/zsh
+export zshdata=$HOME/.local/share/zsh
+export nvimcfg=$HOME/.config/nvim
+export nvimdata=$HOME/.local/share/nvim
+export xcfg=$HOME/.config
+export xdata=$HOME/.local/share
+export xcache=$HOME/.cache
+export gitcfg=$HOME/.config/git
+export weztermcfg=$HOME/.config/wezterm
+export zshcache=$HOME/.cache/zsh
+export nvimcache=$HOME/.cache/nvim
+export code=$HOME/Code
+export work=$HOME/Work
+
+
