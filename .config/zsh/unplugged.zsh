@@ -1,9 +1,16 @@
-
+ 
 #
 # minimal plugin and file loader
 #
 
 #================================================================================
+
+#=================================================
+# Manage Plugins (3rd party)
+#
+# Functions:
+#     plugin-load, plugin-clone, plugin-source, plugin-compile
+#------------------------------------------------
 
 ##: plugin-load
 ##:
@@ -88,6 +95,15 @@ function plugin-compile {
   done
 }
 
+
+
+#=================================================
+# Manage RC Files
+#
+# Functions:
+#     rc-compile
+#------------------------------------------------
+
 ##: rc-compile
 ##:
 ##: just a simple function to recompile all plugins
@@ -100,4 +116,76 @@ function rc-compile {
     zrecompile -pq "$f"
   done
 }
+
+##: rc-source
+##:
+##: source all files in rc.d
+function rc-source () {
+  ZSHRCD=${ZSHRCD:-$ZDOTDIR/rc.d}
+  for f in $@; do
+    if [[ -f $ZSHRCD/$f.zsh ]]; then
+      source $ZSHRCD/$f.zsh
+    else
+      >&2 echo "No such file: $ZSHRCD/$f.zsh"
+    fi
+  done
+ }
+
+##: rc-edit
+##:
+##: Edit Config Files
+function rcedit ()    { 
+  local app=$1
+  local rcfile=${2:-config}
+  local rcdir="${XDG_CONFIG_HOME:-$HOME/.config}"
+  local cachedir="${XDG_CACHE_HOME:-$HOME/.cache}/rcedits/${app}"
+  local backupfilename=${rcfile}.$(date +%Y%m%d%H%M%S)
+  local backupfilepath="${cachedir}/${backupfilename}"
+  local rceditor=${EDITOR:-nvim}
+  here=$(pwd)
+  cd "${rcdir}/${app}"
+  mkdir -p "${cachedir}"
+  cp "${rcfile}" "${backupfilepath}"
+  ${rceditor} "${rcfile}"    
+  cd "${here}"
+}
+
+#=================================================
+# Oh-my-zsh helpers
+#
+# Functions:
+#     omz-info, omz-load, omz-read
+#------------------------------------------------
+
+##: omz-info
+##:
+##: List oh-my-zsh plugins
+function omz-info () {
+  omz_plugins="${ZPLUGINDIR}/ohmyzsh/plugins"
+  preview_cmd="bat $omz_plugins/{}/README.md"
+  ls "$omz_plugins" | fzf --preview="$preview_cmd"
+}
+
+##: omz-load
+##:
+##: Load oh-my-zsh plugin
+function omz-load () {
+  plug=$(omz-info)
+  source $ZPLUGINDIR/ohmyzsh/plugins/$plug/$plug.plugin.zsh
+}
+
+##: omz-read
+##:
+##: Read oh-my-zsh plugin README
+function omz-read () {
+  plug=$(omz-info)
+  source $ZPLUGINDIR/ohmyzsh/plugins/$plug/README.md
+}
+
+alias rcedit-wezterm="rcedit wezterm wezterm.lua"
+alias rcedit-zsh="rcedit zsh .zshrc"
+alias rcedit-git="rcedit git config"
+alias rcedit-p10k="rcedit zsh p10k.zsh"
+alias rcedit-nvim="rcedit nvim init.lua"
+
 
