@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Save this file as ~/.config/yadm/bootstrap and make it executable. It will
+# execute all executable files (excluding templates and editor backups) in the
+# ~/.config/yadm/bootstrap.d directory when run.
+
+set -eu
+
+NC='\033[0m'              # No Color
+BIRed='\033[1;91m'        # Red
+BIBlue='\033[1;94m'       # Blue
+BIGreen='\033[1;92m'      # Green
+BIYellow='\033[1;93m'     # Yellow
+BIPurple='\033[1;95m'     # Purple
+
+# Directory to look for bootstrap executables in
+BOOTSTRAP_D="${BASH_SOURCE[0]}.d"
+
+yadm remote set-url origin git@github.com:NickCrew/extreme-dotfiles.git
+yadm submodule update --init --recursive
+
+if [[ ! -d "$BOOTSTRAP_D" ]]; then
+    echo "${BIRed}Error: bootstrap directory '$BOOTSTRAP_D' not found${NC}" >&2
+    exit 1
+fi
+
+find -L "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
+    if [[ -x "$bootstrap" && ! "$bootstrap" =~ "##" && ! "$bootstrap" =~ "~$" ]]; then
+        if ! "$bootstrap"; then
+            echo "${BIRed}Error: bootstrap '$bootstrap' failed${NC}" >&2
+            exit 1
+        fi
+    fi
+done
+

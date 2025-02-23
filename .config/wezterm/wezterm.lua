@@ -45,6 +45,11 @@ end
 config.leader = { key = "g", mods = "SUPER", timeout_millseconds = 1000 }
 
 config.keys = {
+  { key = "t",        mods = "SUPER|SHIFT|ALT",       action = wt.action.ToggleAlwaysOnTop },
+
+  { key = "q",        mods = "SUPER|SHIFT|ALT",       action = wt.action.CloseCurrentPane({confirm = true }) },
+  { key = "u",        mods = "LEADER",       action = wt.action.OpenLinkAtMouseCursor },
+
   --[[ WINDOW SIZE ]]--
   { key = "z",        mods = "ALT",          action = wt.action.TogglePaneZoomState },
 
@@ -63,7 +68,7 @@ config.keys = {
   { key = 'UpArrow',   mods = 'SHIFT',       action = act.ScrollToPrompt(-1) },
   { key = 'DownArrow', mods = 'SHIFT',       action = act.ScrollToPrompt(1) },
   --[[ SEARCH ]]--
-  { key = 'r',         mods = 'LEADER',      action = wt.action.Search { Regex = '[a-f0-9]{6,}' } },
+  { key = 'f',         mods = 'LEADER',      action = wt.action.Search { Regex = '[a-f0-9]{6,}' } },
   { key = 'r',         mods = 'LEADER',      action = act.ActivateKeyTable { name = 'resize_pane', one_shot = false } },
   { key = 'a',         mods = 'LEADER',      action = act.ActivateKeyTable { name = 'activate_pane', timeout_milliseconds = 1000 } },
   --[[ ADUST PANES ]]--
@@ -138,21 +143,24 @@ config.key_tables = {
 
 config.audible_bell                   = "Disabled"
 config.automatically_reload_config    = true
+config.adjust_window_size_when_changing_font_size = false
 config.check_for_updates              = true
-config.color_scheme                   = set_theme_for_appearance('tokyonight', 'tokynonight-day')
+config.color_scheme                   = set_theme_for_appearance('ayu-dark', 'tokynonight-day')
 config.enable_scroll_bar              = true
 config.enable_wayland                 = false
-config.font                           = wt.font("OperatorMono Nerd Font", { weight = "Medium" })
-config.font_size                      = 16.5
+config.font                           = wt.font("0xProto Nerd Font", { weight = "Medium" })
+config.font_size                      = 15
 config.initial_cols                   = 200
 config.initial_rows                   = 35
 config.line_height                    = 1.20
-config.max_fps                        = 60
+config.max_fps                        = 120
+config.front_end                      = "WebGpu"
+config.webgpu_power_preference        = "HighPerformance"
 config.show_new_tab_button_in_tab_bar = true
 config.tab_bar_at_bottom              = false
 config.tab_max_width                  = 100
 config.use_dead_keys                  = false
-config.use_fancy_tab_bar              = true
+config.use_fancy_tab_bar              = false
 config.warn_about_missing_glyphs      = true
 config.window_background_opacity      = 1.0
 config.window_close_confirmation      = "NeverPrompt"

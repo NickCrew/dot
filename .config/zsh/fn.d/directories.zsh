@@ -1,34 +1,7 @@
-
-# name: find-port-process
-# synopsis: Find process using port (requires sudo)
-function find-port-process () { 
-  local port
-  local pid
-  port=$1
-  pid=$(sudo lsof -nP -i4TCP:${port} | grep LISTEN | awk '{print $2}')
-  if [[ -z $pid ]]; then
-      echo "No process found using port $port"
-  else
-      ps -p $pid
-  fi
-}
-
-# name: color-table
-# synopsis: show all 256 colors
-function color-table () {
-  for i in {0..255};
-    do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; 
-  done
-}
-
-
-nvm() {
-  echo "🚨 NVM not loaded! Loading now..."
-  unset -f nvm
-  export NVM_PREFIX=$(brew --prefix nvm)  [ -s "$NVM_PREFIX/nvm.sh" ] && . "$NVM_PREFIX/nvm.sh"  nvm "$@"
-}
-
-
+#
+# Directory Navigation and miscellaneous file management utilities
+# 
+#
 
 # name: d
 # synopsis: Directory Navigation
@@ -77,7 +50,7 @@ function tmp () {
     mkdir -p -p "$r" && pushd "$r"
 }
 
-# name: n
+# name: n (nnn)
 # synopsis: nnn cd on exit
 function n ()
 {
@@ -110,9 +83,9 @@ function n ()
     }
 }
 
-# name: ranger
+# name: rr (ranger)
 # synopsis: ranger cd on exit - changes your location when you exit with Q, :q exits normally
-function ranger {
+function r {
     local IFS=$'\t\n'
     local tempfile="$(mktemp -t tmp.XXXXXX)"
     local ranger_cmd=(
@@ -127,4 +100,5 @@ function ranger {
     fi
     command rm -f -- "$tempfile" 2>/dev/null
 }
+
 

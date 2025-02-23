@@ -1,0 +1,80 @@
+## vim: ft=yaml.ansible
+---
+- name: Setup OSX Development Workstation
+  hosts: localhost
+
+  tasks:
+
+  - name: Install Packages
+    tags: 
+      - packages
+      - always
+    block: 
+
+    - name: Add custom homebrew repos
+      community.general.homebrew_tap:
+        name: 
+          - epk/epk
+          - homebrew/cask-versions
+
+    - name: Install core packages via brew casks
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+      with_items:
+        - 1password
+        - font-sf-mono-nerd-font
+        - github
+        - iterm2
+        - ngrok
+        - slack
+        - wezterm-nightly
+        - zoom
+
+    - name: Install homebrew packages
+      community.general.homebrew:
+        name: [
+          'aws-iam-authenticator',
+          'awscli',
+          'coreutils',
+          'curl',
+          'direnv',
+          'fzf',
+          'gpg',
+          'htop',
+          'kubectx',
+          'kubernetes-cli',
+          'kubernetes-helm',
+          'libtool',
+          'libxslt',
+          'libyaml',
+          'mas',
+          'openssl',
+          'pkg-config',
+          'rcm',
+          'readline',
+          'tmux',
+          'unixodbc',
+          'unzip',
+          'watchman',
+          'xz',
+          'yadm',
+          'yarn',
+          'zlib',
+          'zsh',
+        ]
+        state: present
+        update_homebrew: true
+
+    - name: Install cargo packages
+      community.general.cargo:
+        name: "{{ item }}"
+      with_items:
+        -	broot 
+        -	distant
+        - bat
+        - code-minimap
+        - exa
+        - fzf
+        - rg
+        - stylua
+        - zoxide

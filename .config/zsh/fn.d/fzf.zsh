@@ -1,4 +1,10 @@
 
+[[ -f ~/.fzf/shell/completion.zsh ]] \
+  && source ~/.fzf/shell/completion.zsh 
+
+[[ -f ~/.fzf/shell/key-bindings.zsh ]] \
+  && source ~/.fzf/shell/key-bindings.zsh 
+
 #List Awesome FZF Functions
 function fzf-awesome-list() {
 if [[ -f $AWESOME_FZF_LOCATION ]]; then
@@ -127,6 +133,13 @@ function fzf-kill-processes() {
   fi
 }
 
+# Search directory stack
+function fzf-dirs() {
+  local dir
+  dir=$(dirs -v | fzf | awk '{print $1}')
+  cd -${dir}
+}
+
 # Enhanced Git Status (Open multiple files with tab + diff preview)
 fzf-git-status() {
     git rev-parse --git-dir > /dev/null 2>&1 || { echo "You are not in a git repository" && return }
@@ -177,3 +190,19 @@ function search-from-top () {
   cd "$(git rev-parse --show-toplevel 2>/dev/null)"
   fzf-cd-widget
 }
+
+
+alias fcd='fzf-cd'
+alias fcdh='fzf-cd-incl-hidden'
+alias fcdp='fzf-cd-to-parent'
+alias fcdf='fzf-cd-to-file'
+alias fe='fzf-eval'
+alias ff='fzf-find-files'
+alias faf='fzf-aliases-functions'
+alias fkp='fzf-kill-processes'
+alias fdi='fzf-dirs'
+alias fco='fzf-checkout'
+alias fgs='fzf-git-status'
+alias frm='fzf-rm'
+alias fman='fzf-man'
+alias fals='fzf-awesome-list'

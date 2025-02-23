@@ -38,7 +38,9 @@
     # timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     # example               # example user-defined segment (see prompt_example function below)
     # per_directory_history   # Oh My Zsh per-directory-history local/global indicator
-    #newline
+    
+    kubecontext             # current kubernetes context (https://kubernetes.io/)
+    newline
     #
     os_icon                 # os identifier
     context
@@ -68,8 +70,9 @@
     # todo
     # timewarrior
     #
-    kubecontext             # current kubernetes context (https://kubernetes.io/)
+    
     aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+    newline
     direnv                  # direnv status (https://direnv.net/)
     node_version          # node.js version
     go_version            # go version (https://golang.org)
@@ -107,6 +110,7 @@
     # cpu_arch              # CPU architecture
 
     # =========================[ Line #2 ]=========================
+
     newline
     status
     command_execution_time  # duration of the last command

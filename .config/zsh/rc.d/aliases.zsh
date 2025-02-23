@@ -1,5 +1,8 @@
-alias nvi="nvr --remote-silent"
+
+
+# Vi / Vim / Neovim
 alias v='~/opt/nvim-macos-x86_64/bin/nvim'
+alias nvi="nvr --remote-silent"
 alias nvs='nvr --remote-silent'
 alias nvws='nvr --remote-wait-silent'
 alias nvt='nvr --remote-tab'
@@ -27,18 +30,17 @@ alias gac='gimme-aws-creds'
 # Wezterm
 alias wt='wezterm'
 alias wtst='wezterm cli set-tab-title'
+alias gty='ghostty'
 
 
- # Dotfiles
-alias dots='git --git-dir=$HOME/.dot.git --work-tree=$HOME'
 
  # Git
 alias g='git'
 alias gtw='gittower' 
 alias lg='lazygit'
 alias gz='search-from-top'
-
- 
+alias gf="git-fuzzy"
+alias tg='terragrunt'
  
 
  # List files

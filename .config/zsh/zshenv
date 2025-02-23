@@ -26,6 +26,9 @@ export ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
 export INFOPATH="/usr/local/share/info:${XDG_DATA_HOME}/info:${INFOPATH:-}"
 export MANPATH="/usr/local/share/man:${XDG_DATA_HOME}/man:${MANPATH:-}"
 
+# Temporary directory
+export TMPDIR=$HOME/tmp
+
 # Behavior
 export KEYTIMEOUT=1
 

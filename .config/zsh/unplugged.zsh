@@ -121,12 +121,18 @@ function rc-compile {
 ##:
 ##: source all files in rc.d
 function rc-source () {
-  ZSHRCD=${ZSHRCD:-$ZDOTDIR/rc.d}
+  if [[ -d $ZDOTDIR/$1 ]]; then
+    srcdir=$ZDOTDIR/$1
+    shift 1
+  else
+    srcdir=$ZDOTDIR
+  fi
+
   for f in $@; do
-    if [[ -f $ZSHRCD/$f.zsh ]]; then
-      source $ZSHRCD/$f.zsh
+    if [[ -f $srcdir/$f*.zsh ]]; then
+      source $srcdir/$f*.zsh
     else
-      >&2 echo "No such file: $ZSHRCD/$f.zsh"
+      >&2 echo "No such file: $srcdir/$f*.zsh"
     fi
   done
  }
@@ -187,5 +193,6 @@ alias rcedit-zsh="rcedit zsh .zshrc"
 alias rcedit-git="rcedit git config"
 alias rcedit-p10k="rcedit zsh p10k.zsh"
 alias rcedit-nvim="rcedit nvim init.lua"
+alias rcedit-ghostty="rcedit ghostty config"
 
 
