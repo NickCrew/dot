@@ -8,7 +8,8 @@
 	safecrlf = false
 	quotepath = false
 	preloadindex = true
-    pager = delta
+    	pager = delta
+	attributesfile = ~/.config/git/attributes
 
 [interactive]
   diffFilter = delta --color-only
@@ -27,10 +28,10 @@
 
 [user]
 	name = Nick Ferguson
-	email = ncf@nickferguson.dev
+	email = nferguson@a10networks.com
 
 [github]
-	user = NickCrew
+	user = nferguson_a10
 
 [commit]
 	gpgsign = false
@@ -56,7 +57,7 @@
 [push]
 	# When pushing code, always push only your current branch to a branch of the same name
 	default = current
-  autoSetupRemote = true
+  	autoSetupRemote = true
 
 [fetch]
 	# Automatically prune deleted branches from your local copy when you fetch (or pull)
@@ -139,8 +140,8 @@
 	# Total obliteration
 	wipe = !git add -A && git commit -qm  WIPE SAVEPOINT  && git reset HEAD~1 --hard
 
-    # List tracked files
-    tracked = ls-files
+    	# List tracked files
+    	tracked = ls-files
 
 	# show last commit in directory
 	slc = !"git show $(git lcd)"  
@@ -165,13 +166,13 @@
 
 	# Log with list of changed files for each commit
 	ll = log --stat --abbrev-commit
-    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
-    lg2 = log --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-    lg = lg1
+    	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+    	lg2 = log --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    	lg = lg1
 
 	# List of my own commits
 	my = log --branches=* --no-merges  --date=short --author='Nick Ferguson' --pretty=format:'%C(magenta)%h%C(blue)%d%Creset %s %C(blue bold)- %an, %ar%Creset'
-    dlm = "!git fetch && git branch --merged | egrep -v 'master' | egrep -v 'main' | xargs git branch -d"
+    	dlm = "!git fetch && git branch --merged | egrep -v 'master' | egrep -v 'main' | xargs git branch -d"
 
 	# List of branches ordered by last change
 	branches = for-each-ref --sort=-committerdate refs/heads/ --format='%(color:bold)%(refname:short)%(color:reset)\t%(committerdate:relative)'
@@ -199,12 +200,6 @@
 	rlt =  format:%C(auto)%h%C(reset) %C(white)-%C(reset) %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%C(auto)%d%C(reset)%n %C(white)⤷%C(reset) %s %C(241)- %aN <%aE>%C(reset)%n %C(white)⤷%C(reset) %C(bold yellow)(%C(magenta)%gd%C(bold yellow))%C(reset) %gs %C(241)- %gN <%gE>%C(reset)%n%w(0,7,7)%+(trailers:only,unfold)
 	rlf =  format:%C(auto)%h%C(reset) %C(bold yellow)(%C(magenta)%gd%C(bold yellow))%C(reset)%C(auto)%d%C(reset)   %C(italic 239)[P: %p] [T: %t]%C(reset)%n%C(white)Author:%C(reset)   %aN %C(241)<%aE>%C(reset)%n          %C(italic blue)%ad%C(reset) %C(italic cyan)(%ar)%C(reset)%n%C(white)Commit:%C(reset)   %cN %C(241)<%cE>%C(reset)   %C(italic 239)[GPG: %G?% GK]%C(reset)%n          %C(italic blue)%cd%C(reset) %C(italic cyan)(%cr)%C(reset)%n%C(white)Reflog:%C(reset)   %gN %C(241)<%gE>%C(reset)%n       
 
-
-[includeIf "hasconfig:remote.*.url:https://github.com/ThreatX/**"]
-  path = ~/Work/.gitconfig-threatx
-
-[includeIf "hasconfig:remote.*.url:git@github.com:ThreatX/**"]
-  path = ~/Work/.gitconfig-threatx
 
 
 [include]

@@ -942,7 +942,8 @@
                     ]
                 }
             ],
-            "name": "Default"
+            "name": "Default",
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         },
         {
             "complex_modifications": {
@@ -995,6 +996,75 @@
         {
             "complex_modifications": {
                 "rules": [
+                    {
+                        "description": "Change Control + h/j/k/l to Arrows",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "left_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "down_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "up_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "right_arrow" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Map Caps -> Esc (when alone), L_Ctrl (when chorded)",
+                        "manipulators": [
+                            {
+                                "description": "Map Caps -> Esc (when alone), L_Ctrl (when chorded)",
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
                     {
                         "description": "Exchange semicolon and colon",
                         "enabled": false,
@@ -1235,7 +1305,6 @@
                     },
                     {
                         "description": "LCMD + Right to End",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -1252,7 +1321,6 @@
                     },
                     {
                         "description": "LCMD + Left to Home",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -1269,7 +1337,6 @@
                     },
                     {
                         "description": "LCMD + Down to Page Down",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -1286,7 +1353,6 @@
                     },
                     {
                         "description": "LCMD + Up to Page Up",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {

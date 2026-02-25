@@ -58,5 +58,13 @@ Temporary Items
 #
 .envrc
 .env
+.env.*
 
 .tflint.hcl
+
+settings.local.json
+backlog/
+**/reviews/
+**/backlog/
+
+**/tmp/

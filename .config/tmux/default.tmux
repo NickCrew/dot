@@ -1,5 +1,5 @@
 # vim: ft=tmux foldmethod=marker 
-set option -g prefix C-a
+set -g prefix C-a
 
 tmux_conf="~/.config/tmux"
 settings="$tmux_conf/settings.tmux"

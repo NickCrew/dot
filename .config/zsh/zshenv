@@ -37,7 +37,7 @@ export EDITOR=nvim
 export VISUAL=$EDITOR
 
 # Pager
-export PAGER=most
+export PAGER='less -R'
 export MANAPAGER=$PAGER
 
 # Man/info
@@ -105,3 +105,4 @@ export code=$HOME/Code
 export work=$HOME/Work
 
 
+. "$HOME/.cargo/env"
