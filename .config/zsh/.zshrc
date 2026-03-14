@@ -35,7 +35,6 @@ PLUGINS=(
   zsh-completions
 
   fzf-marks
-  bd
   git-extra-commands
   terragrunt-oh-my-zsh-plugin
 
@@ -50,6 +49,8 @@ PLUGINS=(
 
   ohmyzsh/plugins/rbenv
   ohmyzsh/plugins/ruby
+
+  ohmyzsh/plugins/nvm
 
   ohmyzsh/plugins/1password
   ohmyzsh/plugins/aws
@@ -146,6 +147,8 @@ setopt extendedglob
 
 # Load RC {{{
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 for f in $ZSHRCD/*.zsh; do   # Load RC files
   source $f
 done
@@ -186,10 +189,18 @@ bindkey -M menuselect  '^[[C'  .forward-char  '^[OC'  .forward-char
 
 complete -o nospace -C terraform terraform
 
-source $ZDOTDIR/local.zsh
+[[ -f $ZDOTDIR/local.zsh ]] && source $ZDOTDIR/local.zsh
 
 
 typeset -U path
 
 
 
+
+# pnpm
+export PNPM_HOME="/Users/nferguson/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

@@ -56,10 +56,6 @@ export SSH_IDENTITY="$HOME/.ssh/id_ed25519"
 #---------------------------
 
 # Homebrew
-export HOMEBREW_PREFIX="/usr/local";
-export HOMEBREW_CELLAR="/usr/local/Cellar";
-export HOMEBREW_REPOSITORY="/usr/local/Homebrew";
-
 # Docker
 export COLIMA_VM="${COLIMA_VM:-default}"
 export COLIMA_VM_SOCKET="${XDG_CONFIG_HOME:-$HOME/.config}/colima/${COLIMA_VM}/docker.sock"

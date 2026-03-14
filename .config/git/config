@@ -27,11 +27,11 @@
   theme = Monokai Extended
 
 [user]
-	name = Nick Ferguson
-	email = nferguson@a10networks.com
+	name = Nicholas Ferguson
+	email = nick@atlascrew.dev
 
 [github]
-	user = nferguson_a10
+	user = NickCrew
 
 [commit]
 	gpgsign = false
@@ -207,10 +207,10 @@
 
 [credential "https://github.com"]
 	helper = 
-	helper = !/usr/local/bin/gh auth git-credential
+	helper = !/opt/homebrew/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/usr/local/bin/gh auth git-credential
+	helper = !/opt/homebrew/bin/gh auth git-credential
 
 
