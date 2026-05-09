@@ -63,8 +63,14 @@ Temporary Items
 .tflint.hcl
 
 settings.local.json
-backlog/
-**/reviews/
-**/backlog/
+**/.agents/reviews/
+**/.agents/fixes/
+
+.fastembed_cache
+.codanna/
+!.codanna/settings.json
+
+**/out/
+
 
 **/tmp/
