@@ -1,5 +1,3 @@
-LS_COLORS=${LS_COLORS:-$(paste -sd: $ZDOTDIR/lscolors.txt)}
-export LS_COLORS
 
 # autoload -Uz compinit
 # for dump in $ZDOTDIR/.zcompdump(N.mh+24); do

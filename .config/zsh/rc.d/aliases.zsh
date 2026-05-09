@@ -9,6 +9,8 @@ alias nvt='nvr --remote-tab'
 alias nvts='nvr --remote-tab-silent'
 alias vi='nvim'
 alias c="claude --permission-mode=bypassPermissions"
+alias codex='codex --yolo'
+alias gemini='gemini --yolo'
 
  
 

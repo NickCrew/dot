@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+if [[ "$AUTOCOMPLETE_ENABLED" == "yes" ]]; then
+  AUTOCOMPLETE_ENABLED="no" exec zsh
+else
+  AUTOCOMPLETE_ENABLED="yes" exec zsh
+fi

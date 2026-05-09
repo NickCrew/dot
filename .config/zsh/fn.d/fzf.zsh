@@ -1,9 +1,6 @@
+# Load FZF 
 
-[[ -f ~/.fzf/shell/completion.zsh ]] \
-  && source ~/.fzf/shell/completion.zsh 
-
-[[ -f ~/.fzf/shell/key-bindings.zsh ]] \
-  && source ~/.fzf/shell/key-bindings.zsh 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #List Awesome FZF Functions
 function fzf-awesome-list() {
@@ -206,3 +203,4 @@ alias fgs='fzf-git-status'
 alias frm='fzf-rm'
 alias fman='fzf-man'
 alias fals='fzf-awesome-list'
+

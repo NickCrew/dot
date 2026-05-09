@@ -1,30 +1,58 @@
 # vim: ft=tmux
-# Terminal & True Color
-set -g default-terminal "screen-256color"
-set -as terminal-features ",xterm-256color:RGB"     #  For <3.2 : set -ga terminal-overrides ",xterm-256color*:Tc"
+# File: settings.tmux
+# Description: Sourced by tmux.conf
+#-------------------------------------------------
 
-# Shell
+
+# ==============================================================================
+# TERMINAL & COLOR SUPPORT
+# ==============================================================================
+
+set -g default-terminal "tmux-256color"
 set -g default-command zsh
-set -g history-limit 10000
 
-# Input
-set -g prefix C-a  
-set -g mode-keys vi
+# Clipboard
+set -as terminal-features "*:clipboard"
+set -s set-clipboard on
+
+# True color, Undercurl & Underscore colors support
+set -as terminal-features "*:RGB"
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
+
+set -g history-limit 100000
+set -g bell-action none  # No bells at all
+
+
+# ==============================================================================
+# CORE SETTINGS
+# ==============================================================================
+
+setw -g mode-keys vi             # Vi bindings in copy mode
 set -g mouse on
-set -sg escape-time 10
+set -g detach-on-destroy on      # off: Stay in tmux when session closes
+set -g remain-on-exit on         # Windows can be respawned after command completion
+set -g focus-events on           # Focus events enabled for terminals that support it
+set -g status-interval 5         # update status bar every n seconds
 
-# UI
-set -g focus-events on
+# Window/Pane naming and numbering
+setw -g pane-base-index 1        # Pane numbers start at 1
+set -g base-index 1              # Window numbers start at 1
+set -g renumber-windows on       # No gaps after closing windows
+set -g automatic-rename off
 
-# Statusbar
-set -g status-interval 5    # update status bar every n seconds
+# Time settings 
+set -s escape-time 0             # (ms) No delay after Esc 
+set -g display-time 4000         # (ms) Duration of status messages 
+set -g repeat-time 750           # (ms) Timeout for repeatable keybindings (bind -r)
 
-# Window Names / Indexes
-set -g base-index 1         
-set -g automatic-rename on 
-set-option -g renumber-windows on
 
-# Panes
-setw -g pane-base-index 1
+# ==============================================================================
+# PLUGIN CUSTOMIZATION OPTIONS
+# ==============================================================================
 
+set -g @sidebar-tree 'e'
+set -g @sidebar-tree-focus 'w'
+set -g @sidebar-tree-command 'tree -C'
+set -g @fpp-mode 'paste' # Paste selected filepaths instead of launching editor
 

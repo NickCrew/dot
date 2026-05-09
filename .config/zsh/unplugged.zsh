@@ -18,11 +18,11 @@
 ##: and add it to your fpath.
 function plugin-load {
   local repo plugdir initfile initfiles=()
-  ${ZPLUGINDIR:=${ZDOTDIR:-~/.config/zsh}/plugins}
+  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.local/share/zsh/plugins}
 
   for repo in $@; do
     plugdir=$ZPLUGINDIR/${repo:t}
-    initfile=$plugdir/${repo:t}.plugin.zsh
+    initfile=$plugdir/${repo:t}.plugin.zsh:
     if [[ ! -d $plugdir ]]; then
       echo "Cloning $repo..."
       git clone -q --depth 1 --recursive --shallow-submodules \
@@ -38,6 +38,7 @@ function plugin-load {
     fpath+=$plugdir
     (( $+functions[zsh-defer] )) && zsh-defer . $initfile || . $initfile
   done
+    
 }
 
 
@@ -47,7 +48,7 @@ function plugin-load {
 ##: leaving the user to source plugins themselves
 function plugin-clone {
   local repo plugdir initfile initfiles=()
-  ZPLUGINDIR=${ZPLUGINDIR:-${ZDOTDIR:-$HOME/.config/zsh}/plugins}
+  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.local/share/zsh/plugins}
 
   for repo in $@; do
     plugdir=$ZPLUGINDIR/${repo:t}
@@ -71,7 +72,7 @@ function plugin-clone {
 ##: now, plugin-source is a separate thing
 function plugin-source {
   local plugdir
-  ZPLUGINDIR=${ZPLUGINDIR:-${ZDOTDIR:-$HOME/.config/zsh}/plugins}
+  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.local/share/zsh/plugins}
 
   for plugdir in $@; do
     [[ $plugdir = /* ]] || plugdir=$ZPLUGINDIR/$plugdir
@@ -86,7 +87,7 @@ function plugin-source {
 ##:
 ##: just a simple function to recompile all plugins
 function plugin-compile {
-  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.config/zsh/plugins}
+  ZPLUGINDIR=${ZPLUGINDIR:-$HOME/.local/share/zsh/plugins}
   autoload -U zrecompile
   local f
 
@@ -96,30 +97,47 @@ function plugin-compile {
 }
 
 
-
-#=================================================
-# Manage RC Files
-#
-# Functions:
-#     rc-compile
-#------------------------------------------------
-
 ##: rc-compile
 ##:
-##: just a simple function to recompile all plugins
+##: just a simple function to recompile all ZSH RC files
 function rc-compile {
-  ZSHRCD=${ZSHRCD:-$ZDOTDIR/rc.d}
   autoload -U zrecompile
   local f
 
-  for f in $ZSHRCD/*.zsh{,-theme}(N); do
+  # *.zsh files
+  for f in $ZDOTDIR/**/*.zsh{,-theme}(N); do
     zrecompile -pq "$f"
   done
+
+  # .z* files
+  for f in .zshrc, .zprofile, .zlogin; do
+    if [[ -f $ZDOTDIR/$f ]]; then
+      zrecompile -pq "$ZDOTDIR/$f"
+    fi
+  done
+
+  # zshenv
+  if [[ -f $HOME/.zshenv ]]; then
+    zrecompile -pq "$HOME/.zshenv"
+  fi
 }
+
+##: zwc-clean
+##:
+##: Cleanup *.zwc.old files
+function zwc-clean {
+  rm -f "${ZDOTDIR}/**/*.zwc.old*"
+  rm -f "${ZPLUGINDIR}/**/*.zwc.old*"
+  rm -f "${HOME}/*.zwc.old*"
+}
+
 
 ##: rc-source
 ##:
-##: source all files in rc.d
+##: source rc files
+##:
+##: Example: 
+##:    rc-source rc.d aliases completion
 function rc-source () {
   if [[ -d $ZDOTDIR/$1 ]]; then
     srcdir=$ZDOTDIR/$1
@@ -129,32 +147,14 @@ function rc-source () {
   fi
 
   for f in $@; do
-    if [[ -f $srcdir/$f*.zsh ]]; then
-      source $srcdir/$f*.zsh
+    if [[ -f "$srcdir/$f".zsh ]]; then
+      source "$srcdir/$f".zsh
     else
-      >&2 echo "No such file: $srcdir/$f*.zsh"
+      >&2 echo "No such file: $srcdir/$f.zsh"
     fi
   done
  }
 
-##: rc-edit
-##:
-##: Edit Config Files
-function rcedit ()    { 
-  local app=$1
-  local rcfile=${2:-config}
-  local rcdir="${XDG_CONFIG_HOME:-$HOME/.config}"
-  local cachedir="${XDG_CACHE_HOME:-$HOME/.cache}/rcedits/${app}"
-  local backupfilename=${rcfile}.$(date +%Y%m%d%H%M%S)
-  local backupfilepath="${cachedir}/${backupfilename}"
-  local rceditor=${EDITOR:-nvim}
-  here=$(pwd)
-  cd "${rcdir}/${app}"
-  mkdir -p "${cachedir}"
-  cp "${rcfile}" "${backupfilepath}"
-  ${rceditor} "${rcfile}"    
-  cd "${here}"
-}
 
 #=================================================
 # Oh-my-zsh helpers
@@ -187,12 +187,4 @@ function omz-read () {
   plug=$(omz-info)
   source $ZPLUGINDIR/ohmyzsh/plugins/$plug/README.md
 }
-
-alias rcedit-wezterm="rcedit wezterm wezterm.lua"
-alias rcedit-zsh="rcedit zsh .zshrc"
-alias rcedit-git="rcedit git config"
-alias rcedit-p10k="rcedit zsh p10k.zsh"
-alias rcedit-nvim="rcedit nvim init.lua"
-alias rcedit-ghostty="rcedit ghostty config"
-
 
