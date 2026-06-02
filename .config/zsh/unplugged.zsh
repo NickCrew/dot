@@ -104,15 +104,19 @@ function rc-compile {
   autoload -U zrecompile
   local f
 
+  echo "Re-compiling RC files in ZDOTDIR: $ZDOTDIR .."
+
   # *.zsh files
   for f in $ZDOTDIR/**/*.zsh{,-theme}(N); do
     zrecompile -pq "$f"
+    echo "Re-compiled $f."
   done
 
   # .z* files
   for f in .zshrc, .zprofile, .zlogin; do
     if [[ -f $ZDOTDIR/$f ]]; then
       zrecompile -pq "$ZDOTDIR/$f"
+      echo "Re-compiled $f"
     fi
   done
 
